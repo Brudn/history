@@ -1,0 +1,444 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Memories ♡</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Share Tech Mono', monospace;
+    background: #080b12;
+    color: #e7eaf0;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* BACKGROUND */
+.background {
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(rgba(5, 9, 18, .75), rgba(5, 9, 18, .88)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=90")
+        center/cover no-repeat;
+    z-index: -2;
+}
+
+.background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle,
+        transparent 10%,
+        rgba(0, 0, 0, .5) 100%
+    );
+}
+
+/* HEADER */
+.header {
+    position: absolute;
+    top: 35px;
+    left: 4%;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: #dce4ee;
+}
+
+.quote {
+    position: absolute;
+    top: 35px;
+    right: 4%;
+    text-align: right;
+    color: #9299a5;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* MAIN */
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 25px;
+}
+
+.subtitle {
+    color: #b7c0ce;
+    font-size: 15px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 34px;
+    font-weight: normal;
+    letter-spacing: 4px;
+    margin-bottom: 18px;
+}
+
+.description {
+    color: #9ba4b2;
+    font-size: 14px;
+    margin-bottom: 50px;
+    line-height: 1.8;
+}
+
+/* BUTTON */
+.input-button {
+    width: 200px;
+    padding: 16px;
+    border: 1px solid #8bbaff;
+    background: rgba(10, 20, 35, .7);
+    color: #e5efff;
+    font-family: inherit;
+    font-size: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 0 25px rgba(70, 130, 255, .15);
+}
+
+.input-button:hover {
+    background: #1b2c49;
+    box-shadow: 0 0 30px rgba(70, 130, 255, .35);
+    transform: translateY(-2px);
+}
+
+/* PASSWORD MODAL */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 5;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 450px;
+    background: rgba(13, 17, 24, .96);
+    border: 1px solid #3a424e;
+    border-radius: 13px;
+    padding: 28px;
+    box-shadow: 0 15px 60px rgba(0, 0, 0, .5);
+    animation: appear .25s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 17px;
+}
+
+.modal-header h2 {
+    font-size: 17px;
+    font-weight: normal;
+}
+
+.close {
+    background: none;
+    border: none;
+    color: #aeb6c2;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.modal-description {
+    font-size: 12px;
+    color: #a0a8b4;
+    margin-bottom: 22px;
+}
+
+/* PASSWORD INPUT */
+.password-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #414956;
+    background: #171c25;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 17px;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.password-wrapper input::placeholder {
+    color: #78818e;
+}
+
+.toggle {
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: #aeb6c2;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+/* SUBMIT */
+.submit {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 9px;
+    background: #252a33;
+    color: #e1e5ec;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.submit:hover {
+    background: #35445a;
+}
+
+.error {
+    display: none;
+    color: #ff7777;
+    font-size: 12px;
+    margin-top: 15px;
+}
+
+.error.show {
+    display: block;
+}
+
+/* FOOTER */
+.footer {
+    position: absolute;
+    bottom: 30px;
+    left: 4%;
+    right: 4%;
+    display: flex;
+    justify-content: space-between;
+    color: #a6afbd;
+    font-size: 12px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .header {
+        top: 25px;
+        left: 20px;
+        font-size: 12px;
+    }
+
+    .quote {
+        display: none;
+    }
+
+    h1 {
+        font-size: 27px;
+        letter-spacing: 2px;
+    }
+
+    .subtitle {
+        font-size: 12px;
+    }
+
+    .description {
+        font-size: 12px;
+        margin-bottom: 35px;
+    }
+
+    .modal-box {
+        padding: 22px;
+    }
+
+    .footer {
+        font-size: 10px;
+        bottom: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<header class="header">
+    ▣ &nbsp; our memory vault
+</header>
+
+<div class="quote">
+    "Some moments are not meant<br>
+    to be shared, only to be remembered."
+</div>
+
+<main class="container">
+    <p class="subtitle">Private Photo Collection</p>
+
+    <h1>Our Memories ♡</h1>
+
+    <p class="description">
+        Tempat khusus untuk menyimpan setiap momen indah kita.
+    </p>
+
+    <button class="input-button" onclick="openModal()">
+        ♙ &nbsp; Input Code
+    </button>
+</main>
+
+<!-- PASSWORD MODAL -->
+<div class="modal" id="passwordModal">
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2>♙ &nbsp; Masukkan Sandi</h2>
+            <button class="close" onclick="closeModal()">×</button>
+        </div>
+
+        <p class="modal-description">
+            Silakan masukkan sandi untuk melanjutkan.
+        </p>
+
+        <form onsubmit="checkPassword(event)">
+            <div class="password-wrapper">
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Masukkan sandi..."
+                    autocomplete="off"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="toggle"
+                    onclick="togglePassword()"
+                    aria-label="Tampilkan sandi"
+                >◉</button>
+            </div>
+
+            <button type="submit" class="submit">
+                Masuk
+            </button>
+
+            <p class="error" id="error">
+                Sandi salah! Silakan coba lagi.
+            </p>
+        </form>
+    </div>
+</div>
+
+<footer class="footer">
+    <span>♙ &nbsp; Data ini dilindungi. Hanya untuk kita.</span>
+    <span>♡ &nbsp; For us</span>
+</footer>
+
+<script>
+/* ===================================
+   PENGATURAN WEBSITE
+=================================== */
+
+// GANTI DENGAN PASSWORD KAMU
+const PASSWORD = "sayang123";
+
+// GANTI DENGAN LINK DROPBOX KAMU
+const DROPBOX_URL = "https://www.dropbox.com/s/ISI_LINK_KAMU";
+
+// ===================================
+
+const modal = document.getElementById("passwordModal");
+const passwordInput = document.getElementById("password");
+const errorMessage = document.getElementById("error");
+
+function openModal() {
+    modal.classList.add("active");
+    errorMessage.classList.remove("show");
+
+    setTimeout(() => {
+        passwordInput.focus();
+    }, 100);
+}
+
+function closeModal() {
+    modal.classList.remove("active");
+    passwordInput.value = "";
+    errorMessage.classList.remove("show");
+}
+
+function togglePassword() {
+    passwordInput.type =
+        passwordInput.type === "password" ? "text" : "password";
+}
+
+function checkPassword(event) {
+    event.preventDefault();
+
+    const enteredPassword = passwordInput.value;
+
+    if (enteredPassword === PASSWORD) {
+        errorMessage.classList.remove("show");
+
+        // Arahkan ke Dropbox jika sandi benar
+        window.location.href = DROPBOX_URL;
+    } else {
+        errorMessage.classList.add("show");
+        passwordInput.value = "";
+        passwordInput.focus();
+    }
+}
+
+// Tutup modal jika klik di luar kotak
+modal.addEventListener("click", function(event) {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+// Tutup modal dengan tombol Escape
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        closeModal();
+    }
+});
+</script>
+
+</body>
+</html>
+```
